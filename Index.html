@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publisher Buku</title>
+  <style>
+    /* --- Style dasar --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f9f9f9;
+    }
+
+    header {
+      background-color: #2a3d66;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      position: relative;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+
+    ul li {
+      position: relative;
+    }
+
+    ul li a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 20px;
+      display: block;
+      transition: background 0.3s;
+    }
+
+    ul li a:hover {
+      background-color: #405a94;
+      border-radius: 5px;
+    }
+
+    /* --- Dropdown Menu --- */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 220px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      top: 100%;
+      left: 0;
+      z-index: 99;
+      border-radius: 5px;
+    }
+
+    .dropdown-content a {
+      color: #2a3d66;
+      padding: 10px 15px;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* --- Hover (desktop) --- */
+    li.dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* --- Responsif untuk HP --- */
+    .menu-toggle {
+      display: none;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      ul {
+        flex-direction: column;
+        background-color: #2a3d66;
+        width: 100%;
+        display: none;
+      }
+
+      ul.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+        color: white;
+      }
+
+      .dropdown-content {
+        position: static;
+        box-shadow: none;
+        background-color: #324b7a;
+      }
+
+      .dropdown-content a {
+        color: white;
+      }
+
+      li.dropdown:hover .dropdown-content {
+        display: none; /* disable hover di HP */
+      }
+
+      li.dropdown.active .dropdown-content {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Publisher Buku</h1>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <nav>
+      <ul id="nav-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Katalog</a></li>
+        <li class="dropdown">
+          <a href="#" onclick="toggleDropdown(event)">Layanan ▾</a>
+          <div class="dropdown-content">
+            <a href="#">Submit Naskah</a>
+            <a href="#">Prosedur Pendaftaran ISBN</a>
+            <a href="#">Susunan Editorial</a>
+          </div>
+        </li>
+        <li><a href="#">Kontak Kami</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main style="padding: 30px;">
+    <h2>Selamat Datang di Website Publisher Buku</h2>
+    <p>Kami melayani penerbitan buku, pengurusan ISBN, dan berbagai layanan editorial profesional.</p>
+  </main>
+
+ <main style="padding: 30px;">
+  <h2 style="color:#2a3d66; margin-bottom: 20px;">Katalog Buku</h2>
+  <p style="margin-bottom: 20px;">Cari buku berdasarkan judul, ISBN, kategori, atau penulis.</p>
+
+  <!-- 🔍 Form Search -->
+  <div class="search-box">
+    <input type="text" id="judul" placeholder="Cari Judul Buku...">
+    <input type="text" id="isbn" placeholder="Masukkan ISBN...">
+    <input type="text" id="kategori" placeholder="Kategori Buku...">
+    <input type="text" id="penulis" placeholder="Nama Penulis...">
+    <button onclick="cariBuku()">Search</button>
+    <button onclick="resetSearch()" class="reset">Reset</button>
+  </div>
+
+  <!-- 📚 Daftar Buku -->
+  <div class="katalog-container" id="daftarBuku">
+    <div class="buku-card" data-judul="Judul Buku 1" data-isbn="9786020001111" data-kategori="Inspiratif" data-penulis="Budi Santoso">
+      <img src="https://via.placeholder.com/150x200" alt="Buku 1">
+      <h3>Judul Buku 1</h3>
+      <p><strong>Penulis:</strong> Budi Santoso</p>
+      <p><strong>ISBN:</strong> 9786020001111</p>
+      <p><strong>Kategori:</strong> Inspiratif</p>
+    </div>
+
+    <div class="buku-card" data-judul="Panduan Menulis Buku" data-isbn="9786020002222" data-kategori="Pendidikan" data-penulis="Siti Rahmawati">
+      <img src="https://via.placeholder.com/150x200" alt="Buku 2">
+      <h3>Panduan Menulis Buku</h3>
+      <p><strong>Penulis:</strong> Siti Rahmawati</p>
+      <p><strong>ISBN:</strong> 9786020002222</p>
+      <p><strong>Kategori:</strong> Pendidikan</p>
+    </div>
+
+    <div class="buku-card" data-judul="Cinta di Tanah Jawa" data-isbn="9786020003333" data-kategori="Novel" data-penulis="Doni Pratama">
+      <img src="https://via.placeholder.com/150x200" alt="Buku 3">
+      <h3>Cinta di Tanah Jawa</h3>
+      <p><strong>Penulis:</strong> Doni Pratama</p>
+      <p><strong>ISBN:</strong> 9786020003333</p>
+      <p><strong>Kategori:</strong> Novel</p>
+    </div>
+  </div>
+</main>
+
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
